@@ -1,0 +1,65 @@
+{
+  "spec": "2.0",
+  "mod_id": "KSP2MultiplayerRedux",
+  "author": "KSP2 Multiplayer Redux Contributors",
+  "name": "KSP2 Multiplayer Redux",
+  "description": "Real-time multiplayer for KSP2 Redux: shared universe, vessel replication, control locks, time sync, science/tech sync and warp voting.",
+  "source": "https://github.com/CloudX420/KSP2Redux-MP-Mod",
+  "version": "0.2.5",
+  "version_check": "",
+  "main_assembly": "KSP2MultiplayerRedux.dll",
+  "dependencies": [
+    {
+      "id": "SpaceWarp2",
+      "version": {
+        "min": "2.0.0",
+        "max": "*"
+      }
+    }
+  ],
+  "ksp2_version": {
+    "min": "*",
+    "max": "*"
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

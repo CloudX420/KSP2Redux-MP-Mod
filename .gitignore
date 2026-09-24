@@ -1,0 +1,45 @@
+# Build output
+bin/
+obj/
+dist/
+publish/
+*.zip
+
+# IDE / OS
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+.DS_Store
+Thumbs.db
+
+# Unity editor artefacts (the mod is a plain .NET project; none of these belong in the repo)
+Library/
+Logs/
+Temp/
+UserSettings/
+ProjectSettings/
+Packages/
+*.meta
+*.unity
+*.asset
+Assembly-CSharp.csproj
+.vsconfig
+
+# Never commit game assemblies
+**/KSP2_x64/
+**/Managed/
+Assembly-CSharp.dll
+UnityEngine*.dll
+SpaceWarp*.dll
+ReduxLib.dll
+UitkForKsp2*.dll
+uitkforksp2*.dll
+
+# Server runtime state
+KSP2MultiplayerServer/Saves/
+server_config.json
+
+# Local tooling
+.claude/

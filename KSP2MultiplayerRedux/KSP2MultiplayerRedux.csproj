@@ -1,0 +1,128 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>KSP2MultiplayerRedux</AssemblyName>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>10.0</LangVersion>
+    <ImplicitUsings>true</ImplicitUsings>
+    <!--
+      Path to your KSP2 install. Override without editing this file by setting the KSP2DIR
+      environment variable, or by passing -p:KSP2DIR="..." to dotnet build.
+    -->
+    <KSP2DIR Condition="'$(KSP2DIR)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2DIR>
+  </PropertyGroup>
+
+  <!--
+    Exclude Unity-editor folders from ALL default item globs, not just Compile.
+    MSBuild resolves references via {CandidateAssemblyFiles} (= project items) BEFORE HintPath,
+    so a stale game DLL under Packages\ would silently be compiled against instead of $(KSP2DIR).
+  -->
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);Library\**;Packages\**;Temp\**;Logs\**;UserSettings\**;ProjectSettings\**;dist\**;obj\**;bin\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SpaceWarp2">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\SpaceWarp2.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SpaceWarp2.UI">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\SpaceWarp2.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ReduxLib">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\ReduxLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\Unity.Addressables.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\Unity.ResourceManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- KSP2's core sim types (GameManager, VesselComponent, ...) derive from Unity.Entities.SystemBase. -->
+    <Reference Include="Unity.Entities">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\Unity.Entities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\Unity.Collections.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\Unity.Mathematics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="LiteNetLib">
+      <HintPath>lib\LiteNetLib.dll</HintPath>
+    </Reference>
+    <Reference Include="UitkForKsp2">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\UitkForKsp2.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="uitkforksp2.controls.Runtime">
+      <HintPath>$(KSP2DIR)\KSP2_x64_Data\Managed\uitkforksp2.controls.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!--
+    SpaceWarp2 only loads the manifest's main_assembly, and Mono resolves script-referenced assemblies
+    purely by probing the game's Managed folder (AssemblyResolve/LoadFrom are NOT consulted for that path).
+    So LiteNetLib.dll sitting next to the mod is never found. Merge it INTO the mod DLL so there is
+    nothing external to resolve.
+  -->
+  <ItemGroup>
+    <!-- Merge configuration lives in ILRepack.targets next to this project (replaces the package's default target). -->
+    <PackageReference Include="ILRepack.Lib.MSBuild.Task" Version="2.0.34.2" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

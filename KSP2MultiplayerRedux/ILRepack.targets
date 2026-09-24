@@ -1,0 +1,35 @@
+<Project>
+  <!--
+    Merges LiteNetLib.dll INTO KSP2MultiplayerRedux.dll after every Release build.
+    Why: SpaceWarp2 only loads the manifest's main_assembly, and Mono resolves script-referenced
+    assemblies purely by probing the game's Managed folder — AssemblyResolve/LoadFrom are not consulted
+    on that path. A sibling LiteNetLib.dll is therefore never found and every networking type fails to
+    load ("Could not load file or assembly 'LiteNetLib'"). Baking it in leaves nothing external to resolve.
+
+    This file's existence disables the ILRepack package's default auto-merge target, so we fully control
+    inputs (and stay idempotent: the primary input is the compiler's intermediate, never-merged assembly).
+  -->
+  <!-- NOTE: must NOT be named "ILRepack" — the package declares a target of that name after importing this
+       file, which would silently override ours (its own is conditioned out because this file exists). -->
+  <Target Name="MergeLiteNetLibIntoMod" AfterTargets="Build" Condition="$(Configuration.Contains('Release'))">
+    <ItemGroup>
+      <MergeInput Include="@(IntermediateAssembly->'%(FullPath)')" />
+      <MergeInput Include="$(MSBuildProjectDirectory)\lib\LiteNetLib.dll" />
+      <MergeSearchDir Include="$(KSP2DIR)\KSP2_x64_Data\Managed" />
+      <MergeSearchDir Include="$(MSBuildProjectDirectory)\lib" />
+    </ItemGroup>
+
+    <ILRepack
+      TargetKind="Dll"
+      OutputFile="$(TargetPath)"
+      InputAssemblies="@(MergeInput)"
+      LibraryPath="@(MergeSearchDir)"
+      Internalize="false"
+      Parallel="true"
+      DebugInfo="false" />
+
+    <!-- The sibling copy is now redundant (and would be ignored by the game anyway). -->
+    <Delete Files="$(OutDir)LiteNetLib.dll" />
+    <Message Importance="high" Text="ILRepack: LiteNetLib merged into $(TargetPath)" />
+  </Target>
+</Project>
